@@ -1,0 +1,30 @@
+﻿# API Keys Configuration Template
+# Copy this file to api_keys.yaml and fill in your actual API keys
+
+# OpenWeatherMap API
+# Get your free API key at: https://openweathermap.org/api
+openweathermap:
+  api_key: "your_openweathermap_api_key_here"
+
+# Korean Meteorological Administration (optional)
+kma:
+  api_key: "your_kma_api_key_here"
+  service_key: "your_kma_service_key_here"
+
+# NASA POWER API
+# No API key required - free to use
+nasa_power:
+  api_key: null  # No key needed
+
+# Email notifications (optional)
+notifications:
+  email:
+    smtp_server: "smtp.gmail.com"
+    smtp_port: 587
+    smtp_username: "your_email@example.com"
+    smtp_password: "your_app_password"
+
+# Security settings
+security:
+  secret_key: "generate-a-secure-random-key-here"
+  jwt_secret: "generate-another-secure-key-for-jwt"

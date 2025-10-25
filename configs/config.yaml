@@ -1,0 +1,103 @@
+﻿# Main Configuration File
+
+app:
+  name: "Renewable Energy Forecast"
+  version: "0.1.0"
+  environment: "development"
+
+data:
+  collection:
+    sources:
+      - name: "weather_api"
+        enabled: true
+        update_interval: 3600
+      - name: "nasa_power"
+        enabled: true
+        update_interval: 86400
+    
+    locations:
+      - name: "Seoul Solar Farm"
+        latitude: 37.5665
+        longitude: 126.9780
+        type: "solar"
+
+model:
+  default_model: "lstm"
+  prediction_horizon: 24
+  sequence_length: 168
+
+  lstm:
+    hidden_dim: 128
+    num_layers: 2
+    dropout: 0.2
+    bidirectional: false
+    learning_rate: 0.001
+    batch_size: 32
+    epochs: 100
+
+  lstm_attention:
+    hidden_dim: 128
+    num_layers: 2
+    dropout: 0.2
+    attention_dim: 128
+    learning_rate: 0.001
+    batch_size: 32
+    epochs: 100
+
+  transformer:
+    d_model: 128
+    n_heads: 8
+    n_layers: 4
+    d_ff: 512
+    dropout: 0.1
+    learning_rate: 0.0001
+    batch_size: 32
+    epochs: 150
+
+  timeseries:
+    d_model: 128
+    n_heads: 8
+    n_layers: 4
+    dropout: 0.1
+    learning_rate: 0.0001
+    batch_size: 32
+    epochs: 150
+
+  informer:
+    d_model: 128
+    n_heads: 8
+    n_layers: 4
+    dropout: 0.1
+    factor: 5
+    learning_rate: 0.0001
+    batch_size: 32
+    epochs: 150
+
+training:
+  device: "cuda"  # cuda or cpu
+  early_stopping:
+    enabled: true
+    patience: 10
+    min_delta: 0.0001
+
+  scheduler:
+    type: "ReduceLROnPlateau"
+    patience: 5
+    factor: 0.5
+    min_lr: 0.00001
+
+  checkpoint:
+    save_best: true
+    save_last: true
+    save_dir: "./models/checkpoints"
+
+database:
+  type: "sqlite"
+  sqlite:
+    path: "./data/renewable_energy.db"
+
+logging:
+  level: "INFO"
+  file:
+    enabled: true
+    path: "./logs/app.log"

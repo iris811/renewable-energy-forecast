@@ -1,0 +1,74 @@
+version: '3.8'
+
+services:
+  # API Service
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: renewable-energy-api
+    command: python -m uvicorn api.main:app --host 0.0.0.0 --port 8000 --reload
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/app/data
+      - ./models:/app/models
+      - ./logs:/app/logs
+      - ./configs:/app/configs
+    environment:
+      - PYTHONUNBUFFERED=1
+      - ENVIRONMENT=production
+    restart: unless-stopped
+    networks:
+      - renewable-energy-network
+
+  # Dashboard Service
+  dashboard:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: renewable-energy-dashboard
+    command: streamlit run dashboard/app.py --server.port 8501 --server.address 0.0.0.0
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./data:/app/data
+      - ./models:/app/models
+      - ./logs:/app/logs
+      - ./configs:/app/configs
+      - ./evaluation_results:/app/evaluation_results
+    environment:
+      - PYTHONUNBUFFERED=1
+    depends_on:
+      - api
+    restart: unless-stopped
+    networks:
+      - renewable-energy-network
+
+  # Training Service (optional - for scheduled training)
+  trainer:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: renewable-energy-trainer
+    command: python scripts/train_model.py --model-type lstm --epochs 100
+    volumes:
+      - ./data:/app/data
+      - ./models:/app/models
+      - ./logs:/app/logs
+      - ./configs:/app/configs
+    environment:
+      - PYTHONUNBUFFERED=1
+    profiles:
+      - training
+    networks:
+      - renewable-energy-network
+
+networks:
+  renewable-energy-network:
+    driver: bridge
+
+volumes:
+  data:
+  models:
+  logs:
