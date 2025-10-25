@@ -76,6 +76,10 @@ def create_model(
 
     model_config = {**default_configs.get(model_type, {}), **config}
 
+    # Remove training-specific parameters (not model parameters)
+    training_params = ['learning_rate', 'batch_size', 'epochs', 'lr']
+    model_config = {k: v for k, v in model_config.items() if k not in training_params}
+
     # Create model based on type
     if model_type in ['lstm', 'lstm_attention', 'multi_output', 'stacked']:
         model = create_lstm_model(
