@@ -37,9 +37,9 @@ class EarlyStopping:
         self.best_epoch = 0
 
         if mode == 'min':
-            self.val_score_min = np.Inf
+            self.val_score_min = np.inf
         else:
-            self.val_score_min = -np.Inf
+            self.val_score_min = -np.inf
 
     def __call__(self, val_score: float, epoch: int) -> bool:
         """
@@ -136,9 +136,9 @@ class ReduceLROnPlateau:
         self.best_score = None
 
         if mode == 'min':
-            self.best_score = np.Inf
+            self.best_score = np.inf
         else:
-            self.best_score = -np.Inf
+            self.best_score = -np.inf
 
     def __call__(self, val_score: float):
         """
