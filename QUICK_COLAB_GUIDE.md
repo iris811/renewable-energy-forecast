@@ -21,11 +21,11 @@ zip -r renewable-energy-forecast.zip renewable-energy-forecast/
 
 ### Step 3: Colab 노트북 업로드
 
-1. `notebooks/train_on_colab_UPDATED.ipynb` 파일도 Drive에 업로드
+1. `notebooks/train_on_colab.ipynb` 파일도 Drive에 업로드
 
 ### Step 4: Colab에서 열기
 
-1. Drive에서 `train_on_colab_UPDATED.ipynb` 우클릭
+1. Drive에서 `train_on_colab.ipynb` 우클릭
 2. "연결 앱" → "Google Colaboratory"
 3. GPU 활성화: 런타임 → 런타임 유형 변경 → GPU ✅
 
@@ -65,7 +65,7 @@ git push -u origin main
 
 URL 접속:
 ```
-https://colab.research.google.com/github/YOUR_USERNAME/renewable-energy-forecast/blob/main/notebooks/train_on_colab_UPDATED.ipynb
+https://colab.research.google.com/github/YOUR_USERNAME/renewable-energy-forecast/blob/main/notebooks/train_on_colab.ipynb
 ```
 
 ### Step 3: 실행
