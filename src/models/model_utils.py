@@ -77,7 +77,19 @@ def create_model(
     model_config = {**default_configs.get(model_type, {}), **config}
 
     # Remove training-specific parameters (not model parameters)
-    training_params = ['learning_rate', 'batch_size', 'epochs', 'lr']
+    # These parameters are used for training, not for model architecture
+    training_params = [
+        'learning_rate', 'lr',           # Learning rate
+        'batch_size',                    # Batch size
+        'epochs',                        # Number of epochs
+        'weight_decay',                  # Weight decay
+        'momentum',                      # Momentum
+        'patience',                      # Early stopping patience
+        'min_delta',                     # Early stopping min delta
+        'scheduler',                     # LR scheduler type
+        'warmup_steps',                  # Warmup steps
+        'gradient_clip',                 # Gradient clipping
+    ]
     model_config = {k: v for k, v in model_config.items() if k not in training_params}
 
     # Create model based on type
